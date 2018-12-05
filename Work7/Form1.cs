@@ -76,6 +76,7 @@ namespace Work7
                 //新建文件
                 另存为ToolStripMenuItem_Click(sender, e);
             }
+            flag = false;
         }
 
         //另存为
@@ -93,6 +94,7 @@ namespace Work7
                 string name = filename.Substring(index + 1);
                 this.Text = name;
             }
+            flag = false;
         }
 
         private void 页面设置ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -108,19 +110,22 @@ namespace Work7
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (flag) { 
             DialogResult result = MessageBox.Show("是否将更改保存","舞文 1.0.0",  MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                保存ToolStripMenuItem_Click(sender, e);
+                if (result == DialogResult.Yes)
+                {
+                    保存ToolStripMenuItem_Click(sender, e);
+                }
+                else if (result == DialogResult.No)
+                {
+                    //不保存就什么都不用做了
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
             }
-            else if (result == DialogResult.No)
-            {
-                //不保存就什么都不用做了
-            }
-            else
-            {
-                e.Cancel = true;
-            }
+
         }
 
         private void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -303,7 +308,12 @@ namespace Work7
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
+            //不用
+        }
 
+        private void richTextBox1_TextChanged_1(object sender, EventArgs e)
+        {
+            flag = true;
         }
     }
 }
